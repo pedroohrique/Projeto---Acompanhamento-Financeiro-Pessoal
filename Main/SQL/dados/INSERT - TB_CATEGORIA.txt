@@ -1,0 +1,13 @@
+INSERT INTO TB_CATEGORIA
+VALUES 
+(100,'Alimentação'),
+(200,'Moradia'),
+(300,'Transporte'),
+(400,'Saúde'),
+(500,'Lazer e entretrimento'),
+(600,'Compras'),
+(700,'Gastos Ocasionais'),
+(800,'Invesimentos e Aplicações'),
+(900,'Pagamento fatura'),
+(1000,'Educação'),
+(1100,'Outros')

@@ -1,0 +1,4 @@
+1	430	2024-07-15	Aplicação Poupança	Nubank	23623.73	23623.73
+1030	21020	2024-08-19	Aplicaao financeira	Nubank	3788.10	27411.83
+1031	21510	2024-09-09	Aplicação Financeira	Nubank	2768.15	30179.98
+1032	22040	2024-10-07	Aplicação Financeira	Nubank	2687.80	32867.78

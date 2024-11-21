@@ -12,48 +12,57 @@ class RegistroDeGastos:
         
     def janelaCadastro(self):
         """Inicializa a janela de cadastro e seus componentes."""
-        self.root.title("Registro de Gastos")    
-        
+        self.root.title("Registro de Gastos")
+
         # Labels and Entries
-        self.label_data = tk.Label(self.root, text="Data do Gasto:")
-        self.entry_data = tk.Entry(self.root)
-        self.label_valor = tk.Label(self.root, text="Valor do Gasto:")
-        self.entry_valor = tk.Entry(self.root)
-        self.label_descricao = tk.Label(self.root, text="Descrição:")
-        self.entry_descricao = tk.Entry(self.root)
-        self.label_local = tk.Label(self.root, text="Local:")
-        self.entry_local = tk.Entry(self.root)
-        self.label_forma = tk.Label(self.root, text="Forma Pagamento:")
+        self.label_data = tk.Label(self.root, text="Data do Gasto:", font=("Arial", 13, "bold"))
+        self.entry_data = tk.Entry(self.root, font="Arial 13", bg="#ffffff", fg="#333333", bd=2, relief="groove")
+        self.label_valor = tk.Label(self.root, text="Valor do Gasto:", font=("Arial", 13, "bold"))
+        self.entry_valor = tk.Entry(self.root, font="Arial 13", bg="#ffffff", fg="#333333", bd=2, relief="groove")
+        self.label_descricao = tk.Label(self.root, text="Descrição:", font=("Arial", 13, "bold"))
+        self.entry_descricao = tk.Entry(self.root, font="Arial 13", bg="#ffffff", fg="#333333", bd=2, relief="groove")
+        self.label_local = tk.Label(self.root, text="Local:", font=("Arial", 13, "bold"))
+        self.entry_local = tk.Entry(self.root, font="Arial 13", bg="#ffffff", fg="#333333", bd=2, relief="groove")
+        self.label_forma = tk.Label(self.root, text="Forma Pagamento:", font=("Arial", 13, "bold"))
         self.opcoes_forma = ['Cartão de Crédito', 'Cartão de Débito', 'Dinheiro', 'PIX', 'Saldo da Conta']
-        self.combobox_forma = ttk.Combobox(self.root, values=self.opcoes_forma)
-        self.label_parcelamento = tk.Label(self.root, text='Compra parcelada:')
+        self.combobox_forma = ttk.Combobox(self.root, values=self.opcoes_forma, font="Arial 13")
+        self.combobox_forma.configure(background="#ffffff", foreground="#333333")
+        self.label_parcelamento = tk.Label(self.root, text='Compra parcelada:', font=("Arial", 13, "bold"))
         self.variavel_opcao = tk.StringVar()
-        self.opcao1 = tk.Radiobutton(self.root, text="SIM", variable=self.variavel_opcao, value="SIM")
-        self.opcao2 = tk.Radiobutton(self.root, text="NÃO", variable=self.variavel_opcao, value="NÃO")
-        self.label_qtd_parcelas = tk.Label(self.root, text='Quantidade Parcelas:')
-        self.spinbox_qtd_parcelas = tk.Spinbox(self.root, from_=0, to=15)
-        self.label_categoria = tk.Label(self.root, text='Categoria:')
-        self.opcoes_categoria = ['Alimentação', 'Moradia', 'Transporte', 'Saúde', 'Lazer e Entretenimento', 'Compras', 'Gastos Ocasionais', 'Investimentos e Aplicações', 'Pagamento Fatura', 'Educação', 'Outros']
-        self.combobox_categoria = ttk.Combobox(self.root, values=self.opcoes_categoria)
+        self.opcao1 = tk.Radiobutton(self.root, text="SIM", variable=self.variavel_opcao, value="SIM", font="Arial 13", bg="#f0f0f0", fg="#333333", selectcolor="#333333")
+        self.opcao2 = tk.Radiobutton(self.root, text="NÃO", variable=self.variavel_opcao, value="NÃO", font="Arial 13", bg="#f0f0f0", fg="#333333", selectcolor="#333333",)
+        self.label_qtd_parcelas = tk.Label(self.root, text='Quantidade Parcelas:', font=("Arial", 13, "bold"))
+        self.spinbox_qtd_parcelas = tk.Spinbox(self.root, from_=0, to=15, font="Arial 13", bg="#ffffff", fg="#333333", bd=2, relief="groove")
+        self.label_categoria = tk.Label(self.root, text='Categoria:', font=("Arial", 13, "bold"))
+        self.opcoes_categoria = ['Alimentação', 'Moradia', 'Transporte', 'Saúde', 'Lazer e Entreterimento', 'Compras', 'Gastos Ocasionais', 'Investimentos e Aplicações', 'Pagamento Fatura', 'Educação', 'Outros']
+        self.combobox_categoria = ttk.Combobox(self.root, values=self.opcoes_categoria, font="Arial 13")
 
         # Grid layout
-        self.label_data.grid(row=0, column=0, padx=10, pady=5, sticky="w") 
-        self.entry_data.grid(row=0, column=1, padx=10, pady=5)
-        self.label_valor.grid(row=1, column=0, padx=10, pady=5, sticky="w") 
-        self.entry_valor.grid(row=1, column=1, padx=10, pady=5)
-        self.label_descricao.grid(row=2, column=0, padx=10, pady=5, sticky="w")  
-        self.entry_descricao.grid(row=2, column=1, padx=10, pady=5)
-        self.label_local.grid(row=3, column=0, padx=10, pady=5, sticky="w")  
-        self.entry_local.grid(row=3, column=1, padx=10, pady=5)
-        self.label_forma.grid(row=4, column=0, padx=10, pady=5, sticky="w")
-        self.combobox_forma.grid(row=4, column=1, padx=10, pady=5)
-        self.label_parcelamento.grid(row=5, column=0, padx=10, pady= 5, sticky="w")
-        self.opcao1.grid(row=5,column=1, padx=10, pady= 5, sticky="w")
-        self.opcao2.grid(row=5, column=1, padx=10, pady=5, sticky="e")  
-        self.label_qtd_parcelas.grid(row=6, column=0, padx=10, pady=5, sticky="w")      
-        self.spinbox_qtd_parcelas.grid(row=6, column=1, padx=10, pady=5) 
-        self.label_categoria.grid(row=7, column=0, padx=10, pady=5, sticky="w")   
-        self.combobox_categoria.grid(row=7, column=1, padx=10, pady=5)
+        self.label_data.grid(row=0, column=0, columnspan=1, sticky="W") 
+        self.entry_data.grid(row=0, column=1, sticky="WE")
+        self.label_valor.grid(row=4, column=0, sticky="W") 
+        self.entry_valor.grid(row=4, column=1, sticky="WE")
+        self.label_descricao.grid(row=6, column=0, sticky="W")  
+        self.entry_descricao.grid(row=6, column=1, sticky="WE")
+        self.label_local.grid(row=8, column=0, sticky="W")  
+        self.entry_local.grid(row=8, column=1, sticky="WE")
+        self.label_forma.grid(row=10, column=0, sticky="W")
+        self.combobox_forma.grid(row=10, column=1, sticky="WE")
+        self.label_parcelamento.grid(row=12, column=0, sticky="W")
+        self.opcao1.grid(row=12, column=1, padx=10, pady=5, sticky="W")
+        self.opcao2.grid(row=12, column=1, padx=10, pady=5, sticky="E")  
+        self.label_qtd_parcelas.grid(row=14, column=0, sticky="W")      
+        self.spinbox_qtd_parcelas.grid(row=14, column=1, sticky="WE") 
+        self.label_categoria.grid(row=16, column=0, sticky="W")   
+        self.combobox_categoria.grid(row=16, column=1, sticky="WE")
+        self.combobox_categoria.configure(background="#ffffff", foreground="#333333")
+        self.combobox_forma.configure(background="#ffffff", foreground="#333333")
+
+        # Buttons
+        self.botao_registrar = tk.Button(self.root, command=self.insere_info, text="Registrar Gasto", borderwidth=5, font=("Arial", 15, "bold"), bg="#4CAF50", fg="#ffffff", relief="raised", bd=1)
+        self.botao_limpar = tk.Button(self.root, command=self.limpa_informacoes, text="Limpar Dados", borderwidth=5, font=("Arial", 15, "bold"), bg="#4CAF50", fg="#ffffff", relief="raised", bd=1)
+        self.botao_registrar.grid(row=20, column=0, columnspan=3, sticky="NSEW", pady=(3), padx=3)
+        self.botao_limpar.grid(row=24, column=0, columnspan=3, sticky="NSEW", pady=(3), padx=3)
 
     def obtem_dt_registro(self) -> date:
         """Obtém a data de registro atual."""
@@ -68,10 +77,10 @@ class RegistroDeGastos:
             if data_convertida <= dt_registro:
                 return data_convertida.strftime('%d-%m-%Y')
             else:
-                messagebox.showinfo("Erro", "A data do gasto deve ser anterior ou igual à data de registro.")
+                messagebox.showerror("Erro", "A data do gasto deve ser anterior ou igual à data de registro.")
                 return None 
         except ValueError:
-            messagebox.showinfo("Erro", "Informe uma data válida no formato dd-mm-yyyy.")
+            messagebox.showerror("Erro", "Informe uma data válida no formato dd-mm-yyyy.")
             return None  
 
     def obtem_valor_gasto(self) -> float:
@@ -168,18 +177,18 @@ class RegistroDeGastos:
         """Verifica se todas as informações necessárias foram inseridas corretamente."""
         try:
             return all([
-                self.obtem_categoria(),
+                self.obtem_categoria() is not None,
                 self.obtem_qtd_parcelas() is not None,
                 self.obtem_forma_pagamento() is not None,
-                self.verifica_parcelamento(),
-                self.obtem_descricao(),
+                self.verifica_parcelamento() is not None,
+                self.obtem_descricao() is not None,
                 self.obtem_valor_gasto() is not None,
-                self.obtem_dt_gasto(),
-                self.obtem_local()
+                self.obtem_dt_gasto() is not None,
+                self.obtem_local() is not None
             ])
         except (ValueError, TypeError):
             return False
-
+            messagebox.showerror("Erro", "Preencha os campos obrigatórios!")
     def insere_info(self):
         """Insere as informações no banco de dados."""
         connection, cursor = database_connection()
@@ -193,17 +202,7 @@ class RegistroDeGastos:
         else:
             messagebox.showerror("Erro", "Verifique as informações inseridas!")
 
-def main():
+if __name__ == "__main__":
     root = tk.Tk()
     app = RegistroDeGastos(root)
-    app_relatorios = Gera_relatorio()
-    botao_registrar = tk.Button(root, text="Registrar Gasto", command=app.insere_info, borderwidth=4)
-    botao_relatorio = tk.Button(root, text="Extrair Relatório", command=app_relatorios.configura_arquivo, borderwidth=4)
-    botao_limpar = tk.Button(root, text="Limpar Dados", command=app.limpa_informacoes, borderwidth=4)
-    botao_registrar.grid(row=1, column=2, pady=10, padx=(5, 5))
-    botao_relatorio.grid(row=3, column=2, pady=10, padx=5)
-    botao_limpar.grid(row=5, column=2, pady=10, padx=(5, 10))
     root.mainloop()
-
-if __name__ == "__main__":
-    main()

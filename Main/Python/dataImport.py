@@ -1,5 +1,6 @@
 from database import database_connection  
 from datetime import datetime
+from decimal import Decimal
 
 class ImportData:
     def __init__(self) -> None:
@@ -9,7 +10,7 @@ class ImportData:
         """Retorna o mês atual."""
         return datetime.today().month
 
-    def obtem_gasto_cartao(self) -> float:
+    def obtem_gasto_cartao(self) -> Decimal:
         """Obtém o gasto total no cartão para a próxima data de vencimento da fatura."""
         try:
             connection, cursor = database_connection()
@@ -27,12 +28,12 @@ class ImportData:
                 return retorno_query[0]
             else:
                 print('Nenhum valor em aberto para o mês atual.')
-                return 0.0
+                return Decimal(0)
         except Exception as e:
             print(f"Erro ao obter gasto do cartão: {e}")
-            return 0.0
+            return Decimal(0)
 
-    def obtem_demais_valores(self) -> float:
+    def obtem_demais_valores(self) -> Decimal:
         """Obtém outros valores registrados no mês atual, excluindo certas categorias e formas de pagamento."""
         try:
             connection, cursor = database_connection()
@@ -52,13 +53,33 @@ class ImportData:
             if retorno_query and retorno_query[0] is not None:
                 return retorno_query[0]
             else:
-                return 0.0
+                return Decimal(0)
         except Exception as e:
             print(f"Erro ao obter demais valores: {e}")
-            return 0.0
+            return Decimal(0)
+        
+    def obtem_aplicacao_financ(self) -> Decimal:
+        try:
+            connecton, cursor = database_connection()
+            query = """
+               SELECT TOP 1 SALDO_ATUAL
+               FROM TB_APLICACAO_FINANC
+               ORDER BY IDREGISTRO DESC
+            """
+            cursor.execute(query)
+            retorno_query = cursor.fetchone()
+
+            if retorno_query and retorno_query[0] is not None:
+                return retorno_query[0]
+            else:
+                return Decimal(0)
+        except Exception as e:
+            print(f"Erro ao obter os valores aplicados")
+            return Decimal(0)
 
     def gasto_por_categoria(self) -> dict:
         """Obtém o gasto total por categoria."""
+        mes_atual = self.obtem_mes_atual()
         try:
             connection, cursor = database_connection()
             registro_gastos_categoria = {}
@@ -66,17 +87,25 @@ class ImportData:
             
             for id_categoria in categorias_map:
                 query = """
-                    SELECT SUM(VALOR_GASTO) 
-                    FROM TB_ACOMPANHAMENTO_FINANC AF 
-                    WHERE IDCATEGORIA = ?       
+                    SELECT
+		                SUM(VALOR_PARCELA)
+	                FROM 
+		                TB_ACOMPANHAMENTO_FINANC
+	                WHERE 
+		                IDCATEGORIA = ?
+		                AND MONTH(DT_PAGAMENTO) >= ?
+	                GROUP BY
+		                IDCATEGORIA
+	                ORDER BY
+		                IDCATEGORIA ASC    
                 """
-                cursor.execute(query, (id_categoria,))
+                cursor.execute(query, id_categoria, mes_atual)
                 retorno_query = cursor.fetchone()
 
                 if retorno_query and retorno_query[0] is not None:
                     registro_gastos_categoria[id_categoria] = retorno_query[0]
                 else:
-                    registro_gastos_categoria[id_categoria] = 0.0
+                    registro_gastos_categoria[id_categoria] = Decimal(0)
 
             return registro_gastos_categoria
         except Exception as e:
@@ -85,4 +114,6 @@ class ImportData:
 
     def obtem_valor_total_gasto(self) -> float:
         """Calcula o valor total gasto."""
-        return self.obtem_gasto_cartao() + self.obtem_demais_valores()
+        gasto_cartao = self.obtem_gasto_cartao()
+        demais_valores = self.obtem_demais_valores()
+        return float(gasto_cartao) + float(demais_valores)
