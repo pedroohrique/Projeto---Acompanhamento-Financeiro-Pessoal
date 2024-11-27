@@ -73,7 +73,7 @@ class App:
         RegistroDeGastos(janela_cadastro)
         self.obj_indicadores.setup_indicadores()
 
-    def lista_dados_treeview(self):
+    def lista_dados_treeview(self, Event=None):
         for index in self.treeview.get_children():
             self.treeview.delete(index)
         
